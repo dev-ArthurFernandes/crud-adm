@@ -1,7 +1,20 @@
 import {
-    listUsers,
-} from './user'
+    createUserController,
+    listUsersController,
+    listUserController,
+    updateUserController,
+    deleteUserController
+} from './users.controller'
+
+import {
+    loginController
+} from './login.controller'
 
 export {
-    listUsers
+    createUserController,
+    listUsersController,
+    listUserController,
+    updateUserController,
+    deleteUserController,
+    loginController
 }
