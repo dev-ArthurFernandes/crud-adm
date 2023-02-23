@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
     createUserController,
     listUsersController,
@@ -6,6 +7,15 @@ import {
     updateUserController,
     deleteUserController
 } from '../controllers';
+
+import {
+    createUserController,
+    listUsersController,
+    listUserController,
+    updateUserController,
+    deleteUserController
+} from '../controllers';
+
 import {
     checkPostEntries,
     validateEntries,
@@ -23,8 +33,5 @@ userRouter.post("", validatePostEntries, checkPostEntries, validateEmail, create
 userRouter.patch("/:id", ensureToken,validateUserId, validateEntries, validateEmail, updateUserController)
 userRouter.put('/:id', ensureToken, validateUserId, validateEntries, checkPostEntries, validateEmail, updateUserController)
 userRouter.delete('/:id', ensureToken, validateUserId, deleteUserController)
-
-
-
 
 export default userRouter

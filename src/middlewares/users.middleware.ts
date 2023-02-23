@@ -68,13 +68,13 @@ const validatePostEntries = (req: Request, res: Response, next: NextFunction): R
             newReqBodyArray.push(item)
         }
     })
-
-    if(newReqBodyArray.length < 1){
+    
+    if(newReqBodyArray.length < 3){
         throw new AppError("You forgot a required key: name, email, password or admin")
     }
 
     req.body = Object.fromEntries(newReqBodyArray)
-
+    
     return next()
 }
 
@@ -83,9 +83,8 @@ const checkPostEntries = (req: Request, res: Response, next: NextFunction): Resp
     const entriesKeys: Array<string> = Object.keys(req.body)
 
     if(entriesKeys.length < 3){
-        throw new AppError("You forgot a required key: name, email or password")
+        throw new AppError("You forgot a required key: name, email, password or admin")
     }
-
     return next()
 }
 
