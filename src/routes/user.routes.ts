@@ -9,14 +9,6 @@ import {
 } from '../controllers';
 
 import {
-    createUserController,
-    listUsersController,
-    listUserController,
-    updateUserController,
-    deleteUserController
-} from '../controllers';
-
-import {
     checkPostEntries,
     validateEntries,
     validateUserId,
