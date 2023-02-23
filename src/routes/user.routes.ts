@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
     createUserController,
     listUsersController,
@@ -6,6 +7,15 @@ import {
     updateUserController,
     deleteUserController
 } from '../controllers';
+
+import {
+    createUserController,
+    listUsersController,
+    listUserController,
+    updateUserController,
+    deleteUserController
+} from '../controllers';
+
 import {
     checkPostEntries,
     validateEntries,
@@ -17,14 +27,6 @@ import {
 
 const userRouter = Router()
 
-userRouter.get("", ensureToken, listUsersController)
-userRouter.get("/:id", ensureToken, validateUserId, listUserController)
-userRouter.post("", validatePostEntries, checkPostEntries, validateEmail, createUserController)
-userRouter.patch("/:id", ensureToken,validateUserId, validateEntries, validateEmail, updateUserController)
-userRouter.put('/:id', ensureToken, validateUserId, validateEntries, checkPostEntries, validateEmail, updateUserController)
-userRouter.delete('/:id', ensureToken, validateUserId, deleteUserController)
-
-
-
+userRouter.get("/user", listUsers)
 
 export default userRouter

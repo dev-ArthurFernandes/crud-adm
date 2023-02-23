@@ -4,6 +4,7 @@ import { client } from '../../database';
 import { AppError } from '../../error';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 const loginService =async (loginData: ILoginRequest): Promise<string> => {
 
@@ -35,9 +36,9 @@ const loginService =async (loginData: ILoginRequest): Promise<string> => {
     
     const token: string = jwt.sign(
         {
-            role: queryResult.rows[0].admin
+            admin: queryResult.rows[0].admin
         },
-        'CHAVE SECRETA',
+        String(process.env.SECRET_kEY),
         {
             expiresIn: '24h',
             subject: queryResult.rows[0].id
