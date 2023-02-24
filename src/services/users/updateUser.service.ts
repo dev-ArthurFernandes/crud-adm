@@ -13,7 +13,7 @@ const updateUserService = async (userData: IUserRequestSchema, id: number): Prom
         VALEUS(%L)
         WHERE
             users.id = $1
-        RETURNIN id, name, email, admin, active;
+        RETURNIN id, name, email, active, admin;
     `,
         Object.keys(userData),
         Object.values(userData)
