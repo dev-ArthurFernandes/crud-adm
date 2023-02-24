@@ -64,6 +64,11 @@ const validatePostEntries = (req: Request, res: Response, next: NextFunction): R
     let newReqBodyArray: Array<newReqBodyArray> = []
 
     entries.map((item: any) => {
+
+        if(item[0] === ""){
+            throw new AppError("Wrong Email or Password", 401)
+        }
+
         if(requiredKeys.includes(item[0])){
             newReqBodyArray.push(item)
         }
@@ -85,6 +90,7 @@ const checkPostEntries = (req: Request, res: Response, next: NextFunction): Resp
     if(entriesKeys.length < 3){
         throw new AppError("You forgot a required key: name, email, password or admin")
     }
+
     return next()
 }
 
