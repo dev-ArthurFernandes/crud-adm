@@ -1,4 +1,3 @@
-import { compareSync } from 'bcryptjs';
 import format from 'pg-format';
 import { client } from '../../database';
 import { IUserRequestSchema, IUserResult, IUserWithoutPassword } from '../../interfaces';

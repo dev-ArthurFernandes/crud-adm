@@ -3,7 +3,8 @@ import {
     listUsersController,
     listUserController,
     updateUserController,
-    deleteUserController
+    deleteUserController,
+    recoverUserController
 } from './users.controller'
 
 import {
@@ -16,5 +17,6 @@ export {
     listUserController,
     updateUserController,
     deleteUserController,
-    loginController
+    loginController,
+    recoverUserController
 }

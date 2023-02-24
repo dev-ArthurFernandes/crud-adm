@@ -5,7 +5,8 @@ import {
     listUsersController,
     listUserController,
     updateUserController,
-    deleteUserController
+    deleteUserController,
+    recoverUserController
 } from '../controllers';
 
 import {
@@ -14,16 +15,18 @@ import {
     validateUserId,
     validateEmail,
     ensureToken,
-    validatePostEntries
+    validatePostEntries,
+    validateAdminPermission,
+    userActive
 } from '../middlewares';
 
 const userRouter = Router()
 
-userRouter.get("", ensureToken, listUsersController)
-userRouter.get("/:id", ensureToken, validateUserId, listUserController)
+userRouter.get("", ensureToken, userActive, validateAdminPermission, listUsersController)
+userRouter.get("/profile", ensureToken, userActive, validateAdminPermission, listUserController)
 userRouter.post("", validatePostEntries, checkPostEntries, validateEmail, createUserController)
-userRouter.patch("/:id", ensureToken,validateUserId, validateEntries, validateEmail, updateUserController)
-userRouter.put('/:id', ensureToken, validateUserId, validateEntries, checkPostEntries, validateEmail, updateUserController)
-userRouter.delete('/:id', ensureToken, validateUserId, deleteUserController)
+userRouter.patch("/:id", ensureToken, userActive, validateUserId, validateEntries, validateEmail, updateUserController)
+userRouter.put('/:id/recover', ensureToken, userActive, validateAdminPermission, validateUserId, recoverUserController)
+userRouter.delete('/:id', ensureToken, userActive, validateAdminPermission, validateUserId, deleteUserController)
 
 export default userRouter
