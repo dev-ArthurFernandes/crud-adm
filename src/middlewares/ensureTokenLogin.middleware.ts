@@ -20,13 +20,13 @@ const ensureToken =async (req: Request, res: Response, next: NextFunction): Prom
         }
 
         req.user = {
-            id: parseInt(decoded.id),
+            id: parseInt(decoded.sub),
             admin: decoded.admin
         }
 
         return next()
     })
-    
+
 }
 
 export default ensureToken

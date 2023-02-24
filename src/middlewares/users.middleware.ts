@@ -115,11 +115,38 @@ const validateEmail =async (req: Request, res: Response, next: NextFunction): Pr
     return next()
 }
 
+const userActive =async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    
+    const id: number = req.user.id
+
+    const queryString: string = `
+        SELECT
+            *
+        FROM
+            users u
+        WHERE
+            u.id = $1;
+    `
+
+    const queryConfig: QueryConfig = {
+        text: queryString,
+        values: [id]
+    }
+
+    const queryResult: QueryResult = await client.query(queryConfig)
+
+    if(!queryResult.rows[0].active){
+        throw new AppError("Disabled user", 401)
+    }
+
+    return next()
+}
 
 export {
     validateUserId,
     validateEntries,
     checkPostEntries,
     validateEmail,
-    validatePostEntries
+    validatePostEntries,
+    userActive
 }

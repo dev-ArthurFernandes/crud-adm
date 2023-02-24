@@ -5,7 +5,8 @@ import {
     createUserService,
     listUserService,
     updateUserService,
-    deleteUserService
+    deleteUserService,
+    recoverUserService
 } from "../services";
 
 
@@ -27,7 +28,7 @@ const listUsersController =async (req: Request, res: Response): Promise<Response
 
 const listUserController =async (req: Request, res: Response): Promise<Response> => {
     
-    const userId: number = parseInt(req.params.id)
+    const userId: number = req.user.id
 
     const user = await listUserService(userId)
 
@@ -40,7 +41,7 @@ const updateUserController =async (req: Request, res: Response): Promise<Respons
 
     const id: number = parseInt(req.params.id)
 
-    const newUser = updateUserService(userData, id)
+    const newUser = await updateUserService(userData, id)
 
     return res.status(200).json(newUser)
 }
@@ -49,11 +50,20 @@ const deleteUserController =async (req: Request, res: Response): Promise<Respons
     
     const id: number = parseInt(req.params.id)
 
-    deleteUserService(id)
+    await deleteUserService(id)
 
     return res.status(204).send({
         message: "Disabled user"
     })
+}
+
+const recoverUserController =async (req: Request, res: Response): Promise<Response> => {
+
+    const id: number = parseInt(req.params.id)
+
+    const user = await recoverUserService(id)
+
+    return res.status(200).json(user)
 }
 
 export {
@@ -61,5 +71,6 @@ export {
     listUsersController,
     listUserController,
     updateUserController,
-    deleteUserController
+    deleteUserController,
+    recoverUserController
 }
