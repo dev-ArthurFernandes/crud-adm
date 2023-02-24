@@ -68,13 +68,13 @@ const validatePostEntries = (req: Request, res: Response, next: NextFunction): R
             newReqBodyArray.push(item)
         }
     })
-
-    if(newReqBodyArray.length < 1){
+    
+    if(newReqBodyArray.length < 3){
         throw new AppError("You forgot a required key: name, email, password or admin")
     }
 
     req.body = Object.fromEntries(newReqBodyArray)
-
+    
     return next()
 }
 
@@ -83,9 +83,8 @@ const checkPostEntries = (req: Request, res: Response, next: NextFunction): Resp
     const entriesKeys: Array<string> = Object.keys(req.body)
 
     if(entriesKeys.length < 3){
-        throw new AppError("You forgot a required key: name, email or password")
+        throw new AppError("You forgot a required key: name, email, password or admin")
     }
-
     return next()
 }
 
@@ -116,11 +115,38 @@ const validateEmail =async (req: Request, res: Response, next: NextFunction): Pr
     return next()
 }
 
+const userActive =async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    
+    const id: number = req.user.id
+
+    const queryString: string = `
+        SELECT
+            *
+        FROM
+            users u
+        WHERE
+            u.id = $1;
+    `
+
+    const queryConfig: QueryConfig = {
+        text: queryString,
+        values: [id]
+    }
+
+    const queryResult: QueryResult = await client.query(queryConfig)
+
+    if(!queryResult.rows[0].active){
+        throw new AppError("Disabled user", 401)
+    }
+
+    return next()
+}
 
 export {
     validateUserId,
     validateEntries,
     checkPostEntries,
     validateEmail,
-    validatePostEntries
+    validatePostEntries,
+    userActive
 }

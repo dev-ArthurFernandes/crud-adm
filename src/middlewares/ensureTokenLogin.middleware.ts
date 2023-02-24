@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../error';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 const ensureToken =async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
@@ -12,20 +13,20 @@ const ensureToken =async (req: Request, res: Response, next: NextFunction): Prom
 
     token = token.split(' ')[1]
 
-    jwt.verify(token, "CHAVE SECRETA", (error, decoded: any) => {
+    jwt.verify(token, String(process.env.SECRET_kEY), (error, decoded: any) => {
 
         if(error){
             throw new AppError(error.message, 401)
         }
 
         req.user = {
-            id: parseInt(decoded.id),
-            role: decoded.role
+            id: parseInt(decoded.sub),
+            admin: decoded.admin
         }
 
         return next()
     })
-    
+
 }
 
 export default ensureToken

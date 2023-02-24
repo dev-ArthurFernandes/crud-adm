@@ -8,7 +8,8 @@ import {
 } from './users.interfaces'
 
 import {
-    ILoginRequest
+    ILoginRequest,
+    decode
 } from './login.interfaces'
 
 export {
@@ -18,5 +19,6 @@ export {
     IUserResult,
     IUserArray,
     requiredKeys,
-    ILoginRequest
+    ILoginRequest,
+    decode
 }

@@ -3,10 +3,12 @@ import {
     validateEntries,
     checkPostEntries,
     validateEmail,
-    validatePostEntries
+    validatePostEntries,
+    userActive
 } from './users.middleware'
 
 import ensureToken from './ensureTokenLogin.middleware'
+import validateAdminPermission from './adminPermission.middleware'
 
 export {
     validateUserId,
@@ -14,5 +16,7 @@ export {
     checkPostEntries,
     validateEmail,
     ensureToken,
-    validatePostEntries
+    validatePostEntries,
+    validateAdminPermission,
+    userActive
 }

@@ -1,15 +1,14 @@
 import { QueryConfig, QueryResult } from 'pg';
 import { client } from '../../database';
-import { IUserResult } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
-
-const deleteUserService = async (id: number): Promise<IUserResult> => {
-
-    const queryString = `
+const recoverUserService =async (id: number): Promise<IUser> => {
+    
+    const queryString: string = `
         UPDATE
             users
-        SET("active") = ROW('false')
-        WHERE
+        SET("active") = ROW(true)
+        WHERE 
             users.id = $1
         RETURNING id, name, email, active, admin;
     `
@@ -21,7 +20,7 @@ const deleteUserService = async (id: number): Promise<IUserResult> => {
 
     const queryResult: QueryResult = await client.query(queryConfig)
 
-    return queryResult
+    return queryResult.rows[0]
 }
 
-export default deleteUserService
+export default recoverUserService
