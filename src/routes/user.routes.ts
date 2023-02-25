@@ -11,7 +11,6 @@ import {
 
 import {
     checkPostEntries,
-    validateEntries,
     validateUserId,
     validateEmail,
     ensureToken,
@@ -23,9 +22,9 @@ import {
 const userRouter = Router()
 
 userRouter.get("", ensureToken, userActive, validateAdminPermission, listUsersController)
-userRouter.get("/profile", ensureToken, userActive, validateAdminPermission, listUserController)
+userRouter.get("/profile", ensureToken, userActive, listUserController)
 userRouter.post("", validatePostEntries, checkPostEntries, validateEmail, createUserController)
-userRouter.patch("/:id", ensureToken, userActive, validateUserId, validateEntries, validateEmail, updateUserController)
+userRouter.patch("/:id", updateUserController)
 userRouter.put('/:id/recover', ensureToken, userActive, validateAdminPermission, validateUserId, recoverUserController)
 userRouter.delete('/:id', ensureToken, userActive, validateAdminPermission, validateUserId, deleteUserController)
 
