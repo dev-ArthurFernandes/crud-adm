@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction, query } from "express";
 import { QueryConfig, QueryResult } from "pg";
+import { ZodTypeAny } from "zod";
 import { client } from '../database'
 import { AppError } from "../error";
 import { requiredKeys } from "../interfaces";
@@ -28,29 +29,6 @@ const validateUserId = async (req: Request, res: Response, next: NextFunction): 
     if(!queryResult.rowCount){
         throw new AppError('User not found!', 404)
     }
-
-    return next()
-}
-
-const validateEntries = (req: Request, res: Response, next: NextFunction): Response | void => {
-
-    const entries = Object.entries(req.body)
-
-    const requiredKeys: Array<requiredKeys> = ["name", "email", "password"]
-
-    let newReqBodyArray: Array<newReqBodyArray> = []
-
-    entries.map((item: any) => {
-        if(requiredKeys.includes(item[0])){
-            newReqBodyArray.push(item)
-        }
-    })
-
-    if(newReqBodyArray.length < 1){
-        throw new AppError("You forgot a required key: name, email or password")
-    }
-
-    req.body = Object.fromEntries(newReqBodyArray)
 
     return next()
 }
@@ -148,9 +126,16 @@ const userActive =async (req: Request, res: Response, next: NextFunction): Promi
     return next()
 }
 
+const validateEntreis = (schemas: ZodTypeAny) => (req: Request, res: Response, next: NextFunction): Response | void => {
+    const validation = schemas.parse(req.body)
+
+    req.body = validation
+
+    return next()
+}
+
 export {
     validateUserId,
-    validateEntries,
     checkPostEntries,
     validateEmail,
     validatePostEntries,
