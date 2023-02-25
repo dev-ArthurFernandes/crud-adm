@@ -24,7 +24,7 @@ const userRouter = Router()
 userRouter.get("", ensureToken, userActive, validateAdminPermission, listUsersController)
 userRouter.get("/profile", ensureToken, userActive, listUserController)
 userRouter.post("", validatePostEntries, checkPostEntries, validateEmail, createUserController)
-userRouter.patch("/:id", updateUserController)
+userRouter.patch("/:id", ensureToken, userActive, validateUserId, validateEmail, updateUserController)
 userRouter.put('/:id/recover', ensureToken, userActive, validateAdminPermission, validateUserId, recoverUserController)
 userRouter.delete('/:id', ensureToken, userActive, validateAdminPermission, validateUserId, deleteUserController)
 
