@@ -2,21 +2,24 @@ import { QueryConfig, QueryResult } from 'pg';
 import format from 'pg-format';
 import { client } from '../../database';
 import { IUserRequestSchema, IUserResult } from '../../interfaces';
+import { updateUserSchema } from '../../schemas/users.schemas';
 
 
 
 const updateUserService = async (userData: IUserRequestSchema, id: number): Promise<IUserResult> => {
 
-    const queryString = format(`
+    const validatedUserData = updateUserSchema.parse(userData)
+
+    const queryString: string = format(`
         UPDATE
-            users(%I)
-        VALEUS(%L)
+            users
+        SET(%I) = ROW(%L)
         WHERE
             users.id = $1
-        RETURNIN id, name, email, active, admin;
+        RETURNING id, name, email, active, admin;
     `,
-        Object.keys(userData),
-        Object.values(userData)
+        Object.keys(validatedUserData),
+        Object.values(validatedUserData)
     )
 
     const queryConfig: QueryConfig = {

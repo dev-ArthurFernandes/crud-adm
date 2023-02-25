@@ -1,6 +1,5 @@
 import {
     validateUserId,
-    validateEntries,
     checkPostEntries,
     validateEmail,
     validatePostEntries,
@@ -12,7 +11,6 @@ import validateAdminPermission from './adminPermission.middleware'
 
 export {
     validateUserId,
-    validateEntries,
     checkPostEntries,
     validateEmail,
     ensureToken,
