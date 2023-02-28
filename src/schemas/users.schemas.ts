@@ -1,6 +1,5 @@
 import { hashSync } from "bcryptjs";
 import { z } from "zod";
-import { number } from "zod/lib";
 
 const createUserSchema = z.object({
     name: z.string().min(3).max(20),
