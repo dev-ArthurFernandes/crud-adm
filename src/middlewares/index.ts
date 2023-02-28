@@ -3,7 +3,8 @@ import {
     checkPostEntries,
     validateEmail,
     validatePostEntries,
-    userActive
+    userActive,
+    validateEntreis
 } from './users.middleware'
 
 import ensureToken from './ensureTokenLogin.middleware'
@@ -16,5 +17,6 @@ export {
     ensureToken,
     validatePostEntries,
     validateAdminPermission,
-    userActive
+    userActive,
+    validateEntreis
 }

@@ -1,6 +1,7 @@
 import {
     createUserSchema,
-    returnUserSchema
+    returnUserSchema,
+    updateUserSchema
 } from "./users.schemas";
 
 import {
@@ -10,5 +11,6 @@ import {
 export {
     createUserSchema,
     returnUserSchema,
-    createLoginSchema
+    createLoginSchema,
+    updateUserSchema
 }
