@@ -42,11 +42,6 @@ const validatePostEntries = (req: Request, res: Response, next: NextFunction): R
     let newReqBodyArray: Array<newReqBodyArray> = []
 
     entries.map((item: any) => {
-
-        if(item[0] === ""){
-            throw new AppError("Wrong Email or Password", 401)
-        }
-
         if(requiredKeys.includes(item[0])){
             newReqBodyArray.push(item)
         }
@@ -127,6 +122,7 @@ const userActive =async (req: Request, res: Response, next: NextFunction): Promi
 }
 
 const validateEntreis = (schemas: ZodTypeAny) => (req: Request, res: Response, next: NextFunction): Response | void => {
+    
     const validation = schemas.parse(req.body)
 
     req.body = validation
@@ -139,5 +135,6 @@ export {
     checkPostEntries,
     validateEmail,
     validatePostEntries,
-    userActive
+    userActive,
+    validateEntreis
 }
