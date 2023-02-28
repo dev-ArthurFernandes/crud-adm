@@ -36,5 +36,3 @@ userRouter.put('/:id/recover', ensureToken, userActive, validateAdminPermission,
 userRouter.delete('/:id', ensureToken, userActive, validateAdminPermission, validateUserId, deleteUserController)
 
 export default userRouter
-
-// ensureToken, userActive, validateUserId, validateEmail, updateUserController
